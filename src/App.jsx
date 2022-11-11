@@ -1,15 +1,20 @@
 import * as React from 'react'
+import { useState } from 'react';
 
-const List = (props) => (
+const List = (props) => {
+  console.log("List renders")
+  return (
   <ul>
     {props.list.map((item) => (
       <Item key={item.objectID} item={item} />
     ))
     }
   </ul>
-)
+)}
 
-const Item = (props) => (
+const Item = (props) => {
+  console.log("Item renders")
+  return (
   <li key={props.item.objectID} >
     <span>{props.item.title} </span>
     <a>{props.item.url} </a>
@@ -17,15 +22,18 @@ const Item = (props) => (
     <span>comments: {props.item.num_comments} </span>
     <span>points: {props.item.points} </span>
   </li>
-)
+)}
 
 
 const Search = () => {
+  console.log("Search renders")
+  
+  const [searchTerm, setSearchTerm] = React.useState('')
+  
   const handleChange = (event) => {
-    // synthetic event
-    console.log(event)
+    setSearchTerm(event.target.value)
     // value of target (here: input HTML element)
-    console.log(event.target.value)
+    console.log(searchTerm)
   }
   const handleBlur = (event) => {
     // synthetic event
@@ -38,11 +46,14 @@ const Search = () => {
     <div>
       <label htmlFor='search'>Search: </label>
       <input id='search' type='text' onChange={handleChange} onBlur={handleBlur} />
+      <p>Searching for <b>{searchTerm}</b></p>
     </div>
   )
 }
 
 const App = () => {
+
+  console.log("App renders")
   const stories = [
     {
       title: 'React',
