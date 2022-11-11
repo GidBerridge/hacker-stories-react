@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-const title = 'React'
 
 const list = [
   {
@@ -21,24 +20,56 @@ const list = [
   },
 ]
 
+const List = () => (
+  <div>
+    <ul>
+      {list.map((item) => {
+        return <li key={item.objectID} >
+          <span>{item.title}</span>
+          <a>{item.url}</a>
+          <span>author: {item.author} </span>
+          <span>comments: {item.num_comments} </span>
+          <span>points: {item.points} </span>
+        </li>
+      })}
+    </ul>
+  </div>
+)
 
-function App() {
+
+const Search = () => {
+  const handleChange = (event) => {
+    // synthetic event
+    console.log(event)
+    // value of target (here: input HTML element)
+    console.log(event.target.value)
+  }
+  const handleBlur = (event) => {
+    // synthetic event
+    console.log(event)
+    // value of target (here: input HTML element)
+    console.log(event.target.value)
+  }
+
   return (
     <div>
-      <h1>My Hacker Stories</h1>
-
       <label htmlFor='search'>Search: </label>
-      <input id='search' type='text' />
-
-      <hr />
-      <ul>
-        {list.map(function (item) {
-          return <li>{item.title}</li>
-        })}
-      </ul>
+      <input id='search' type='text' onChange={handleChange} onBlur={handleBlur} />
     </div>
   )
-
 }
+
+const App = () => (
+  <div>
+    <h1>My Hacker Stories</h1>
+    <Search />
+    <hr />
+    <List />
+    <hr />
+    <List />
+  </div>
+)
+
+
 
 export default App
