@@ -55,17 +55,19 @@ const App = () => {
     isError: false,
   })
 
-  React.useEffect(() => {
+  //A
+  const handleFetchStories = React.useCallback(() => {
+    //B
     if (!searchTerm) return
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' })
 
-    fetch(`${API_ENDPOINT}${searchTerm}`) //B
-      .then((response) => response.json()) //C
+    fetch(`${API_ENDPOINT}${searchTerm}`)
+      .then((response) => response.json())
       .then((result) => {
         dispatchStories({
           type: 'STORIES_FETCH_SUCCESS',
-          payload: result.hits, // D
+          payload: result.hits,
         })
       })
       .catch(() =>
@@ -73,7 +75,11 @@ const App = () => {
           type: 'STORIES_FETCH_FAILURE',
         })
       )
-  }, [searchTerm])
+  }, [searchTerm]) //E
+
+  React.useEffect(() => {
+    handleFetchStories() // C
+  }, [handleFetchStories]) // D
 
   const handleRemoveStory = (item) => {
     dispatchStories({
